@@ -1,0 +1,5 @@
+name: test-autoscale-veera-qe
+configuration:
+  instances: 1
+origin:
+  container: docker.artifactory.mars.pcf-maximus.com/mars/autoscaling-demo:2.0.4

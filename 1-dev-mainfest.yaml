@@ -1,0 +1,5 @@
+name: test-autoscale
+configuration:
+  instances: 1
+origin:
+  container: docker.artifactory.mars.pcf-maximus.com/mars/autoscaling-demo:2.0.0
