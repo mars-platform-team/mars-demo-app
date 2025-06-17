@@ -25,10 +25,6 @@ This project is a Gradle-based Spring Boot application designed for deployment i
    ```bash
    docker build -t app3:latest .
    ```
-3. Deploy to Kubernetes:
-   ```bash
-   kubectl apply -f k8s-manifests/
-   ```
 
 ## Available Endpoints
 1. **`GET /cpu-load`**  
