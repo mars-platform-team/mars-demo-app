@@ -1,4 +1,4 @@
-# Spring Boot Application with Kubernetes Deployment
+# A Demo Spring Boot Application For K8s Deployments
 
 This project is a Gradle-based Spring Boot application designed for deployment in Kubernetes. It includes configurations for Horizontal Pod Autoscaler (HPA) testing with custom metrics.
 
