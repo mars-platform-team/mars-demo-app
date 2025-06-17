@@ -33,3 +33,4 @@ Thumbs.db
 # Others
 out/
 bin/
+*.code-workspace
