@@ -1,1 +1,1 @@
-epinio --timeout-multiplier 3 push --app-chart mars-app-veera-4.0.0 2-qe-manifest.yaml --chart-value cpuRequests=500m --chart-value memoryRequests=3000m --chart-value cpuLimits=800m --chart-value memoryLimits=3000m --chart-value enableMaximusPrivateRoute=true
+epinio --timeout-multiplier 3 push --app-chart mars-app 2-qe-manifest.yaml --chart-value cpuRequests=500m --chart-value memoryRequests=3000m --chart-value cpuLimits=800m --chart-value memoryLimits=3000m --chart-value enableMaximusPrivateRoute=true
