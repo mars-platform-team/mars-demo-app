@@ -1,1 +1,1 @@
-epinio --timeout-multiplier 3 push --app-chart mars-app 2-qe-manifest.yaml --chart-value cpuRequests=500m --chart-value memoryRequests=3000m --chart-value cpuLimits=800m --chart-value memoryLimits=3000m --chart-value enableMaximusPrivateRoute=true
+epinio push --app-chart mars-app manifest.yaml --chart-value cpuRequests=500m --chart-value memoryRequests=3Gi --chart-value cpuLimits=800m --chart-value memoryLimits=3Gi --chart-value enableMaximusPrivateRoute=true
