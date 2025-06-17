@@ -1,0 +1,10 @@
+name: mars-demo-app-1
+configuration:
+  instances: 1
+  environment:
+    JAVA_OPTS: |
+      -Dspring.cloud.config.enabled=true -Dspring.cloud.config.label=INTEGRATION
+origin:
+  container: docker.artifactory.mars.pcf-maximus.com/mars/autoscaling-demo:2.0.12
+# staging:
+#   builder: paketobuildpacks/builder
