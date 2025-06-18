@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +96,7 @@ public class App {
                             <li><span class="icon">💾</span><a href="/memory-load?size=10">Simulate Memory Load</a></li>
                             <li><span class="icon">♻️</span><a href="/reset-memory">Reset Memory Load</a></li>
                             <li><span class="icon">✅</span><a href="/actuator/health">Check Health</a></li>
+                            <li><span class="icon">📂</span><a href="/simulate-objectstore">Simulate Object Store</a></li>
                         </ul>
                     </div>
                 </body>
@@ -146,6 +149,42 @@ public class App {
             System.gc();
             logger.info("Memory load reset completed. TraceID: {}", span.getSpanContext().getTraceId());
             return "Memory load reset.";
+        } finally {
+            span.end();
+        }
+    }
+
+    @GetMapping("/simulate-objectstore")
+    public String simulateObjectStore() {
+        Span span = tracer.spanBuilder("simulateObjectStore").startSpan();
+        try (Scope scope = span.makeCurrent()) {
+            logger.info("Simulating object store directory usage. TraceID: {}", span.getSpanContext().getTraceId());
+            String objectStoreDir = System.getProperty("com.arjuna.ats.arjuna.objectstore.objectStoreDir", System.getProperty("user.dir"));
+            File dir = new File(objectStoreDir);
+
+            if (!dir.exists()) {
+                logger.info("Object store directory does not exist. Attempting to create: {}", objectStoreDir);
+                if (!dir.mkdirs()) {
+                    logger.error("Failed to create object store directory: {}", objectStoreDir);
+                    return "Error: Failed to create object store directory at " + objectStoreDir;
+                }
+            }
+
+            File testFile = new File(dir, "test.txt");
+            try {
+                if (testFile.createNewFile() || testFile.exists()) {
+                    String content = "This is a test file created for simulating the object store directory.";
+                    java.nio.file.Files.writeString(testFile.toPath(), content);
+                    logger.info("Successfully wrote to test file in object store directory: {}", testFile.getAbsolutePath());
+                    return "Successfully wrote to test file in object store directory: " + testFile.getAbsolutePath();
+                } else {
+                    logger.error("Failed to create or access test file in object store directory: {}", testFile.getAbsolutePath());
+                    return "Error: Failed to create or access test file in object store directory: " + testFile.getAbsolutePath();
+                }
+            } catch (IOException e) {
+                logger.error("IOException while writing to test file in object store directory: {}", e.getMessage());
+                return "Error: IOException while writing to test file in object store directory: " + e.getMessage();
+            }
         } finally {
             span.end();
         }
