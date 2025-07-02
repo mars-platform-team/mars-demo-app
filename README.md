@@ -44,7 +44,12 @@ This project is a Gradle-based Spring Boot application designed for deployment i
    - **Parameters**: None.  
    - **Response**: A message indicating that memory load has been reset.
 
-4. **Actuator Endpoints**  
+4. **`GET /simulate-objectstore`**  
+   - **Description**: Simulates object store directory usage by creating a directory and writing content to a test file.  
+   - **Parameters**: None.  
+   - **Response**: A message indicating the result of the simulation.
+
+5. **Actuator Endpoints**  
    - **`GET /actuator/health`**: Provides the health status of the application.  
    - **`GET /actuator/metrics`**: Provides application metrics, such as memory and CPU usage.  
    - **`GET /actuator/info`**: Displays application-specific information (if configured).  

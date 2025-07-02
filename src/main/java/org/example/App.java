@@ -4,6 +4,12 @@ import io.opentelemetry.api.GlobalOpenTelemetry;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.api.trace.Tracer;
 import io.opentelemetry.context.Scope;
+import io.opentelemetry.sdk.OpenTelemetrySdk;
+import io.opentelemetry.sdk.trace.SdkTracerProvider;
+import io.opentelemetry.sdk.trace.export.BatchSpanProcessor;
+import io.opentelemetry.exporter.otlp.trace.OtlpGrpcSpanExporter;
+import io.opentelemetry.context.propagation.ContextPropagators;
+import io.opentelemetry.api.trace.propagation.W3CTraceContextPropagator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -11,17 +17,46 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.MediaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springframework.boot.origin.OriginTrackedValue;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 @RestController
 public class App {
     private static final Logger logger = LoggerFactory.getLogger(App.class);
-    private static final Tracer tracer = GlobalOpenTelemetry.getTracer("org.example.App");
+    private static final Tracer tracer;
+
+    static {
+        // Initialize OpenTelemetry SDK
+        OtlpGrpcSpanExporter spanExporter = OtlpGrpcSpanExporter.builder().build();
+        SdkTracerProvider tracerProvider = SdkTracerProvider.builder()
+                .addSpanProcessor(BatchSpanProcessor.builder(spanExporter).build())
+                .build();
+
+        OpenTelemetrySdk openTelemetrySdk = OpenTelemetrySdk.builder()
+                .setTracerProvider(tracerProvider)
+                .setPropagators(ContextPropagators.create(W3CTraceContextPropagator.getInstance()))
+                .build();
+
+        GlobalOpenTelemetry.set(openTelemetrySdk);
+        tracer = openTelemetrySdk.getTracer("org.example.App");
+    }
 
     public static void main(String[] args) {
         logger.info("Starting application...");
@@ -96,7 +131,8 @@ public class App {
                             <li><span class="icon">💾</span><a href="/memory-load?size=10">Simulate Memory Load</a></li>
                             <li><span class="icon">♻️</span><a href="/reset-memory">Reset Memory Load</a></li>
                             <li><span class="icon">✅</span><a href="/actuator/health">Check Health</a></li>
-                            <li><span class="icon">📂</span><a href="/simulate-objectstore">Simulate Object Store</a></li>
+                            <li><span class="icon">📂</span><a href="/simulate-objectstore">Simulate File Creation</a></li>
+                            <li><span class="icon">📜</span><a href="/raw-config-server">View Raw Config Server JSON</a></li>
                         </ul>
                     </div>
                 </body>
@@ -188,5 +224,43 @@ public class App {
         } finally {
             span.end();
         }
+    }
+
+    @Autowired
+    private Environment environment;
+
+    @Value("${env-vars.account-lockout-minutes:0}")
+    private int accountLockoutMinutes;
+
+    @Value("${spring.cloud.config.uri}")
+    private String configServerUri;
+
+    @Value("${spring.application.name}")
+    private String appName;
+
+    @Value("${spring.profiles.active:default}")
+    private String profile;
+
+    @Value("${spring.cloud.config.label:}")
+    private String label;
+
+    @GetMapping(value = "/raw-config-server", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String getRawConfigServerJson() {
+        String url = configServerUri;
+        if (!url.endsWith("/")) url += "/";
+        url += appName + "/" + profile;
+        if (!label.isEmpty()) url += "/" + label;
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(url, String.class);
+    }
+
+    @Value("${env-vars.aws-region:}")
+    private String awsRegion;
+
+    @GetMapping("/show-config")
+    public String showConfig() {
+        // Prefer @Value-injected value, fallback to Environment if needed
+        return "Account lockout minutes: " + accountLockoutMinutes;
     }
 }
