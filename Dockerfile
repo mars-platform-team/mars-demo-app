@@ -1,5 +1,5 @@
 # Use an official OpenJDK runtime as a parent image
-FROM <internal image registry>/openjdk:21-jdk-slim
+FROM docker.artifactory.mars.pcf-maximus.com/openjdk:21-jdk-slim
 USER 1000
 # Set the working directory in the container
 WORKDIR /app
