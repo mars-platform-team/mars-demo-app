@@ -1,7 +1,7 @@
 @Library(['orion-pipeline-common@java-imaging', 'orion-pipeline-ci@java-imaging']) _
 
 def config = GenerateCIConfig()
-config.imageKey = "javabellsoft-21"
+config.image_key = "javabellsoft-21"
 config.use_gradle_wrapper = true
 config.buildContainerImage = true
 config.pipeline.stages.ci.build.nodeLabel = "bellsoft-liberica-openjdk-alpine"
