@@ -4,8 +4,8 @@ def config = GenerateCIConfig()
 config.imageKey = "javabellsoft-21"
 config.use_gradle_wrapper = true
 config.buildContainerImage = true
-config.pipeline.stage.ci.build.nodeLabel = "bellsoft-liberica-openjdk-alpine"
-config.pipeline.stage.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-alpine"
-config.pipeline.stage.ci.quality.nodeLabel = "bellsoft-liberica-openjdk-alpine"
-config.pipeline.stage.ci.publish.nodeLabel = "dind"
+config.pipeline.stages.ci.build.nodeLabel = "bellsoft-liberica-openjdk-alpine"
+config.pipeline.stages.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-alpine"
+config.pipeline.stages.ci.quality.nodeLabel = "bellsoft-liberica-openjdk-alpine"
+config.pipeline.stages.ci.publish.nodeLabel = "dind"
 CIPipeline(config)
