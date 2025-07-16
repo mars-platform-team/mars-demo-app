@@ -7,5 +7,5 @@ config.buildContainerImage = true
 config.pipeline.stages.ci.build.nodeLabel = "bellsoft-liberica-openjdk-alpine"
 config.pipeline.stages.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-alpine"
 config.pipeline.stages.ci.quality.nodeLabel = "bellsoft-liberica-openjdk-alpine"
-config.pipeline.stages.ci.publish.nodeLabel = "dind"
+config.pipeline.stages.ci.publish.nodeLabel = "docker"
 CIPipeline(config)
