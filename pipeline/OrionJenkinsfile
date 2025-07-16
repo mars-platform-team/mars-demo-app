@@ -8,5 +8,4 @@ config.pipeline.stage.ci.build.nodeLabel = "bellsoft-liberica-openjdk-alpine"
 config.pipeline.stage.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-alpine"
 config.pipeline.stage.ci.quality.nodeLabel = "bellsoft-liberica-openjdk-alpine"
 config.pipeline.stage.ci.publish.nodeLabel = "dind"
-
 CIPipeline(config)
