@@ -4,10 +4,10 @@ def config = GenerateCIConfig()
 config.image_key = "javabellsoft-21"
 config.use_gradle_wrapper = true
 config.buildContainerImage = true
-config.pipeline.stages.ci.build.nodeLabel = "bellsoft-liberica-openjdk-alpine"
-config.pipeline.stages.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-alpine"
+config.pipeline.stages.ci.build.nodeLabel = "mars-bellsoft-jdk21-dind"
+config.pipeline.stages.ci.unitTest.nodeLabel = "mars-bellsoft-jdk21-dind"
 config.pipeline.stages.ci.unitTest.enabled = false
 config.pipeline.stages.ci.quality.enabled = false
-config.pipeline.stages.ci.quality.nodeLabel = "bellsoft-liberica-openjdk-alpine"
+config.pipeline.stages.ci.quality.nodeLabel = "mars-bellsoft-jdk21-dind"
 config.pipeline.stages.ci.publish.nodeLabel = "docker"
 CIPipeline(config)
