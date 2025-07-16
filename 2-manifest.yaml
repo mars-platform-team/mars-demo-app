@@ -1,0 +1,10 @@
+name: mars-demo-app-2
+configuration:
+  instances: 1
+  environment:
+    JAVA_OPTS: |
+      -Dspring.cloud.config.enabled=true -Dspring.cloud.config.label=DEV -Dcom.arjuna.ats.arjuna.objectstore.objectStoreDir=/workspace/app/tx-store -Dspring.application.name=mars-demo-app-2 -DENV=UAT
+# staging:
+#   builder: platypus.artifactory.mars.pcf-maximus.com/paketobuildpacks/builder-jammy-full:0.3.493
+origin:
+  container: docker.artifactory.mars.pcf-maximus.com/mars/autoscaling-demo:2.0.12
