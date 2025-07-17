@@ -53,6 +53,7 @@ tasks.named('bootBuildImage') {
     buildpacks = [
         "gcr.io/paketo-buildpacks/java"
     ]
+    trustBuilder = true
     docker {
         publishRegistry {
             username = System.getenv('DOCKER_USERNAME')
