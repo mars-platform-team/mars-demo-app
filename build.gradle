@@ -50,9 +50,6 @@ springBoot {
 
 tasks.named('bootBuildImage') {
     builder = "paketobuildpacks/builder-jammy-full:0.3.493"
-    buildpacks = [
-        "gcr.io/paketo-buildpacks/java"
-    ]
     docker {
         publishRegistry {
             username = System.getenv('DOCKER_USERNAME')
