@@ -46,17 +46,18 @@ application {
 }
 
 springBoot {
-    buildImage {
-        builder = "paketobuildpacks/builder-jammy-full:0.3.493"
-        buildpacks = [
-            "gcr.io/paketo-buildpacks/java"
-        ]
-        docker {
-            publishRegistry {
-                username = System.getenv('DOCKER_USERNAME')
-                password = System.getenv('DOCKER_PASSWORD')
-                url = System.getenv('DOCKER_REGISTRY_URL')
-            }
+}
+
+tasks.named('bootBuildImage') {
+    builder = "paketobuildpacks/builder-jammy-full:0.3.493"
+    buildpacks = [
+        "gcr.io/paketo-buildpacks/java"
+    ]
+    docker {
+        publishRegistry {
+            username = System.getenv('DOCKER_USERNAME')
+            password = System.getenv('DOCKER_PASSWORD')
+            url = System.getenv('DOCKER_REGISTRY_URL')
         }
     }
 }
