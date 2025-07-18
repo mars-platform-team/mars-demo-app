@@ -6,7 +6,6 @@ config.use_gradle_wrapper = true
 config.buildContainerImage = true
 config.pipeline.stages.ci.mars2Build.compile.nodeLabel = "bellsoft-liberica-openjdk-debian"
 config.pipeline.stages.ci.mars2Build.containarize.nodeLabel = "bellsoft-liberica-openjdk-debian"
-config.pipeline.stages.ci.unitTest.enabled = false
 config.pipeline.stages.ci.quality.enabled = false
 config.pipeline.stages.ci.jfrog.xray_scanning.enabled = false
 config.pipeline.stages.ci.jfrog.sbom_reporting.enabled = false
