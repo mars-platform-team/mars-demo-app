@@ -8,7 +8,7 @@ config.pipeline.stages.ci.build.nodeLabel = "bellsoft-liberica-openjdk-debian"
 config.pipeline.stages.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-debian"
 config.pipeline.stages.ci.quality.enabled = false
 config.pipeline.stages.ci.jfrog.xray_scanning.nodeLabel = "bellsoft-liberica-openjdk-debian"
-config.pipeline.stages.ci.jfrog.sbom_reporting.enabled = false
+config.pipeline.stages.ci.jfrog.sbom_reporting.nodeLabel = "bellsoft-liberica-openjdk-debian"
 
 config.pipeline.stages.ci.publish.enabled = false
 
