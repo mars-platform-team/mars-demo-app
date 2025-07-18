@@ -9,6 +9,6 @@ config.pipeline.stages.ci.mars2Build.containarize.nodeLabel = "bellsoft-liberica
 config.pipeline.stages.ci.quality.enabled = false
 config.pipeline.stages.ci.jfrog.xray_scanning.enabled = false
 config.pipeline.stages.ci.jfrog.sbom_reporting.enabled = false
-config.pipeline.stages.ci.publish.enabled = false
+config.pipeline.stages.ci.publish.enabled = true
 
 CIPipeline(config)
