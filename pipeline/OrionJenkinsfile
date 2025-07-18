@@ -5,9 +5,10 @@ config.image_key = "javabellsoft-21"
 config.use_gradle_wrapper = true
 config.buildContainerImage = true
 config.pipeline.stages.ci.build.nodeLabel = "bellsoft-liberica-openjdk-debian"
+config.pipeline.stages.ci.unitTest.nodeLabel = "bellsoft-liberica-openjdk-debian"
 config.pipeline.stages.ci.quality.enabled = false
 config.pipeline.stages.ci.jfrog.xray_scanning.enabled = false
 config.pipeline.stages.ci.jfrog.sbom_reporting.enabled = false
-config.pipeline.stages.ci.publish.enabled = true
+config.pipeline.stages.ci.publish.enabled = false
 
 CIPipeline(config)
